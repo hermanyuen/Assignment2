@@ -13,6 +13,18 @@
 void swap(int* n1, int* n2)
 {
     //no peeking! your code goes here
+    if (n1 == nullptr || n2 == nullptr) {
+        if (n1 == nullptr && n2 != nullptr) {
+            *n1 = *n2;
+            n2 = nullptr;
+        }
+        else if (n1 != nullptr && n2 == nullptr) {
+            *n2 = *n1;
+            n1 = nullptr;
+        }
+        else {}
+        return;
+    }
     int temp = *n1;
     *n1 = *n2;
     *n2 = temp;
@@ -20,6 +32,9 @@ void swap(int* n1, int* n2)
 void swap2(int& n1, int& n2)
 {
     //no peeking! your code goes here
+    if (&n1 == nullptr || &n2 == nullptr) {
+        return;
+    }
     int temp = n1;
     n1 = n2;
     n2 = temp;
@@ -31,7 +46,7 @@ TEST(ByPointerReference, Swap)
     //add more test cases as needed
     int n1{ 5 };
     int n2{ 6 };
-
+ 
     swap(&n1, &n2);
     CHECK_EQUAL(6, n1);
 

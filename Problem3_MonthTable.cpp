@@ -20,24 +20,12 @@ TEST(MonthTable, builtInArray)
 	std::array<std::string, 12> months {"January", "February", "March", "April", "May",
 		"June", "July", "August", "September", "October", "November", "December"};
 
-    std::array<int, 12> days;
+    std::array<int, 12> days{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     std::stringstream sCalander;
 
 	for (int day = 0; day < days.size(); ++day)
 	{
-        switch (day+1) {
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            days[day] = 31;
             sCalander << months[day] << days[day];
-            break;
-        case 2:
-            days[day] = 28;
-            sCalander << months[day] << days[day];
-            break;
-        default:
-            days[day] = 30;
-            sCalander << months[day] << days[day];
-        }
 	}
     //std::cout << "\n" << sCalander.str() << "\n";
     std::string calanderString{ "January31February28March31April30May31June30July31August31September30October31November30December31"};
@@ -55,25 +43,12 @@ TEST(MonthTable2, objectArray)
     std::stringstream sCalander;
     std::array<std::string, 12> monthString{ "January", "February", "March", "April", "May",
         "June", "July", "August", "September", "October", "November", "December" };
+    std::array<int, 12> days{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-    for (int month = 0; month <calandar.size(); ++month)
+    for (int day = 0; day <days.size(); ++day)
     {
-        switch (month + 1) {
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            calandar[month].days = 31;
-            calandar[month].months = monthString[month];
-            sCalander << calandar[month].months << calandar[month].days;
-            break;
-        case 2:
-            calandar[month].days = 28;
-            calandar[month].months = monthString[month];
-            sCalander << calandar[month].months << calandar[month].days;
-            break;
-        default:
-            calandar[month].days = 30;
-            calandar[month].months = monthString[month];
-            sCalander << calandar[month].months << calandar[month].days;
-        }
+        struct Month monthObj { monthString[day], days[day] };
+        sCalander << monthObj.months << monthObj.days;
     }
 
     //std::cout << "\n" << sCalander.str() << "\n";

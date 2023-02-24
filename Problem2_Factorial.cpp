@@ -10,7 +10,6 @@
 
 constexpr int factorial(int n)
 {
-    //no peeking! your code goes here
     int ntotal{ n };
     for (int i{n-1}; i > 0; i--) {
         ntotal *= i;

@@ -39,7 +39,8 @@ TEST(ParseIntFailure, Parse)
 
 TEST(ParseIntValueOr, Parse)
 {
-    std::optional<int> result = ParseInt("Hello").value_or(100);
-    std::cout << "\nresult has value? " << result.has_value() <<", result=" << result.value() << "\n";
-    CHECK(result.has_value());
+    int result = ParseInt("Hello").value_or(100);
+    //std::cout << "\nresult has value? " << result.has_value() <<", result=" << result.value() << "\n";
+	CHECK_EQUAL(100, result);
+    //CHECK(result.has_value());
 }

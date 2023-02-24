@@ -19,25 +19,44 @@
 
 std::unique_ptr<char[]> cat(char* c1, char* c2)
 {
-    auto pvalues{ std::make_unique<char[]>(2) };
-    pvalues[0] = *c1;
-    pvalues[1] = *c2;
+    auto pvalues{ std::make_unique<char[]>(std::strlen(c1) + std::strlen(c2) + 1) };
+    if (c1 == nullptr || c2 == nullptr) {
+        if (c1 == nullptr && c2 != nullptr) {
+            pvalues[0] = *c2;
+        }
+        else if (c1 != nullptr && c2 == nullptr) {
+            pvalues[0] = *c1;
+        }
+        else {
+            pvalues = nullptr;
+        }
+        return pvalues;
+    }
+    /*pvalues[0] = *c1;
+    pvalues[std::strlen(c1)] = *c2;*/
+    for (size_t i{}; i < std::strlen(c1); i++) {
+        pvalues[i] = *(c1 + i);
+    }
+    for (size_t i{ std::strlen(c1) }; i < (std::strlen(c1) + std::strlen(c2)); i++) {
+        pvalues[i] = *(c2 + i- std::strlen(c1));
+    }
+    //pvalues[1] = *c2;
 
     return pvalues;
 }
 
 TEST(concatenate, charType)
 {
-    char a{'a'};
-    char b{'b'};
-    auto catValue = cat(&a, &b);
-    //std::cout << "\n" << catValue[0] << "\n";
-    CHECK_EQUAL('a', catValue[0]);
-    CHECK_EQUAL('b', catValue[1]);
+    char* a = (char*)"Hello";
+    char* b = (char*)"World";
+    auto catValue = cat(a, b);
+    std::string helloW(catValue.get());
+    //std::cout << "\n" << helloW << "\n";
+    CHECK_EQUAL("HelloWorld", catValue.get());
 
 }
 
-std::string cat2(const std::string c1, const std::string c2)
+std::string cat2(const std::string& c1, const std::string& c2)
 {
     std::string values;
     values = c1 + c2;
@@ -47,11 +66,11 @@ std::string cat2(const std::string c1, const std::string c2)
 
 TEST(concatenate2, stringType)
 {
-    std::string a{ "a"};
-    std::string b{ "b" };
+    std::string a{ "Hello"};
+    std::string b{ "World" };
     auto catValue = cat2(a, b);
     //std::cout << "\n" << catValue << "\n";
-    CHECK_EQUAL("ab", catValue);
+    CHECK_EQUAL("HelloWorld", catValue);
 }
 
 /*Ihe smart pointer is the better approach. Although I think the string is 
