@@ -11,7 +11,7 @@
 constexpr int factorial(int n)
 {
     int ntotal{ n };
-    for (int i{n-1}; i > 0; i--) {
+    for (int i{n-1}; i > 0; --i) {
         ntotal *= i;
     }
     return ntotal;
@@ -19,11 +19,11 @@ constexpr int factorial(int n)
 
 TEST(factorial, integralType)
 {
-    constexpr int total = factorial(3); //Factorial results deteremined at compile time
+    constexpr int total = factorial(3); //Factorial results determined at compile time
     //std::cout << total  << "\n";
     CHECK_EQUAL(6, total);
 
-    int total2 = factorial(4);    //Factorial results deteremined at runtime
+    int total2 = factorial(4);    //Factorial results determined at runtime
    // std::cout << total2 << "\n";
     CHECK_EQUAL(24, total2);
 }

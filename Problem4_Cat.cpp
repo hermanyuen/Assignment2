@@ -17,10 +17,11 @@
 //
 // Which is the better approach? Explain, in a code-comment block, your rationale for which is the better approach.
 
-std::unique_ptr<char[]> cat(char* c1, char* c2)
+std::unique_ptr<char[]> cat(const char* c1, const char* c2)
 {
-    auto pvalues{ std::make_unique<char[]>(std::strlen(c1) + std::strlen(c2) + 1) };
+    
     if (c1 == nullptr || c2 == nullptr) {
+        auto pvalues{ std::make_unique<char[]>(1) };
         if (c1 == nullptr && c2 != nullptr) {
             pvalues[0] = *c2;
         }
@@ -32,6 +33,7 @@ std::unique_ptr<char[]> cat(char* c1, char* c2)
         }
         return pvalues;
     }
+    auto pvalues{ std::make_unique<char[]>(std::strlen(c1) + std::strlen(c2) + 1) };
     /*pvalues[0] = *c1;
     pvalues[std::strlen(c1)] = *c2;*/
     for (size_t i{}; i < std::strlen(c1); i++) {
@@ -47,21 +49,23 @@ std::unique_ptr<char[]> cat(char* c1, char* c2)
 
 TEST(concatenate, charType)
 {
-    char* a = (char*)"Hello";
-    char* b = (char*)"World";
+    const char* a = "Hello";
+    const char* b = "World";
     auto catValue = cat(a, b);
-    std::string helloW(catValue.get());
+    //std::string helloW(catValue.get());
     //std::cout << "\n" << helloW << "\n";
     CHECK_EQUAL("HelloWorld", catValue.get());
+
+    const char* c = NULL;
+    const char* d = NULL;
+    auto catValue2 = cat(c, d);
+    CHECK(!catValue2.get());
 
 }
 
 std::string cat2(const std::string& c1, const std::string& c2)
 {
-    std::string values;
-    values = c1 + c2;
-
-    return values;
+    return c1 + c2;
 }
 
 TEST(concatenate2, stringType)
@@ -75,4 +79,5 @@ TEST(concatenate2, stringType)
 
 /*Ihe smart pointer is the better approach. Although I think the string is 
 simpler to write, the unique pointer is safer in terms of deallocation and 
-the variables are also unique so there's no concerns with naming.*/
+the variables are also unique so there's no concerns with aliasing. If other
+variables are trying to use the same address, it won't be able to.*/

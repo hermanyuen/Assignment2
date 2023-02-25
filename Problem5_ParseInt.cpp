@@ -9,7 +9,7 @@
 //
 // Add an additional unit test that verifies use of `std::optional::value_or()`.
 
-std::optional<int> ParseInt(const std::string& s/* s (commenting out to avoid 'unreferenced formal parameter' warning) */)
+std::optional<int> ParseInt(const std::string& s)
 {
     
 	try {
@@ -43,4 +43,7 @@ TEST(ParseIntValueOr, Parse)
     //std::cout << "\nresult has value? " << result.has_value() <<", result=" << result.value() << "\n";
 	CHECK_EQUAL(100, result);
     //CHECK(result.has_value());
+
+	int result2 = ParseInt("10").value_or(100);
+	CHECK_EQUAL(10, result2);
 }

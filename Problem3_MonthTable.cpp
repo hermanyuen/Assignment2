@@ -45,7 +45,7 @@ TEST(MonthTable2, objectArray)
         "June", "July", "August", "September", "October", "November", "December" };
     std::array<int, 12> days{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-    for (int day = 0; day <days.size(); ++day)
+    for (int day = 0; day < days.size(); ++day)
     {
         struct Month monthObj { monthString[day], days[day] };
         sCalander << monthObj.months << monthObj.days;
@@ -55,3 +55,42 @@ TEST(MonthTable2, objectArray)
     std::string calanderString{ "January31February28March31April30May31June30July31August31September30October31November30December31" };
     CHECK_EQUAL(calanderString, sCalander.str());
 }
+
+
+
+
+//template<typename T, int days>
+//struct std::array {
+//    std::string month[];
+//    std::string days;
+//};
+
+
+//TEST(MonthTable2, objectArray)  //tried multi dimensional arrays but failed.
+//{
+//    std::stringstream sCalander;
+//    std::array<std::array<std::string, 2>, 12> month = { {
+//    { {"Janurary", "31"} },
+//        {{ "February", "28"} }
+//        //{ { "March", "31" } },
+//        //{ { "April", "30" } },
+//        //{ { "May", "31" } },
+//        //{ { "June", "30" } },
+//        //{ { "July", "31" } },
+//        //{ { "August", "31" } },
+//        //{ { "September", "30" } },
+//        //{ { "Ocotober", "31" } },
+//        //{ { "November", "30" } },
+//        //{ { "December", "31" } }
+//        } };
+//
+//    //std::cout << month[0][0] << "\n";
+//    for (int day = 0; day <2; ++day)
+//    {
+//       // sCalander << month[day][0] << month[day][1];
+//    }
+//
+//    //std::cout << "\n" << sCalander.str() << "\n";
+//    std::string calanderString{ "January31February28March31April30May31June30July31August31September30October31November30December31" };
+//    CHECK_EQUAL(calanderString, sCalander.str());
+//}
